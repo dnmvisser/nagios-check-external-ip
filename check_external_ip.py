@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
- 
+
+# https://github.com/dnmvisser/nagios-check-external-ip
 # Import the necessary python modules.
 
 from urllib2 import Request, urlopen, URLError, HTTPError
@@ -68,18 +69,18 @@ except IOError:
     f = open(ipAddressFile,'w')
     f.write(external_ip_address)
     f.close
-    print "WARNING - New File Created with IP Address: %s" % external_ip_address
+    print "WARNING - New File Created with source IP Address: %s" % external_ip_address
     exit(1)
 else:
     f = open(ipAddressFile,'r+')
     current_ip_address = f.read()
     f.close
     if current_ip_address == external_ip_address:
-         print "OK - Current IP Address: %s" % external_ip_address
+         print "OK - Source IP Address: %s" % external_ip_address
          exit(0)
     else:
          f = open(ipAddressFile,'w')
          f.write(external_ip_address)
          f.close()
-         print "CRITICAL - IP Address has changed to %s" % external_ip_address
+         print "CRITICAL - Source IP Address has changed to %s" % external_ip_address
          exit(2)
